@@ -1,9 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class TicTacToeFrame extends JFrame implements TicTacToeView {
-    private JButton[][] buttons;
-    private JOptionPane p;
+    private final JButton[][] buttons;
+    private final JOptionPane p;
+    private final Map<TicTacToeModel.Status, Runnable> update=new HashMap<>();
 
 
 
@@ -29,8 +33,21 @@ public class TicTacToeFrame extends JFrame implements TicTacToeView {
                 this.add(b);
 
             }
-
         }
+        update.put(TicTacToeModel.Status.X_WON, ()-> {
+            JOptionPane.showMessageDialog(this, "X won the game!!");
+            this.dispose();
+        });
+        update.put(TicTacToeModel.Status.O_WON, ()-> {
+            JOptionPane.showMessageDialog(this,"O won the game!!");
+            this.dispose();
+        });
+        update.put(TicTacToeModel.Status.TIE, ()-> {
+            JOptionPane.showMessageDialog(this,"TIE!!");
+            this.dispose();
+        });
+
+
         this.setSize(300,300);
         this.setVisible(true);
     }
@@ -40,19 +57,8 @@ public class TicTacToeFrame extends JFrame implements TicTacToeView {
     public void update(TicTacToeEvent event) {
         String label= event.isTurn()? "X":"O";
         buttons[event.getX()][event.getY()].setText(label);
-        if(event.getStatus()== TicTacToeModel.Status.X_WON){
-            p.showMessageDialog(this,"X won the game");
-            this.dispose();
-        }
-        else if(event.getStatus()== TicTacToeModel.Status.O_WON){
-            p.showMessageDialog(this,"O won the game");
-            this.dispose();
-        }
-        else if(event.getStatus()== TicTacToeModel.Status.TIE){
-            p.showMessageDialog(this,"TIE");
-            this.dispose();
-        }
-
+        Runnable r=update.get(event.getStatus());
+        if(r!=null)r.run();
     }
 
     public static void main(String[] args) {

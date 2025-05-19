@@ -1,11 +1,11 @@
 import java.util.EventObject;
 
 public class TicTacToeEvent extends EventObject {
-    private int y;
-    private int x;
-    private boolean turn;
+    private final int y;
+    private final int x;
+    private final boolean turn;
 
-    private TicTacToeModel.Status status;
+    private final TicTacToeModel.Status status;
 
     public TicTacToeEvent(TicTacToeModel ticTacToeModel, int x, int y, char[][] grid, boolean turn, TicTacToeModel.Status status) {
         super(ticTacToeModel);

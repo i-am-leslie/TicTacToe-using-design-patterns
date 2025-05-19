@@ -2,7 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TicTacToeController implements ActionListener {
-    private TicTacToeModel model;
+    private final TicTacToeModel model;
     public TicTacToeController(TicTacToeModel model) {
         this.model=model;
     }

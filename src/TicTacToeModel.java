@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TicTacToeModel {
 
@@ -7,11 +8,11 @@ public class TicTacToeModel {
     public static final int SIZE = 3;
     public static final boolean X = true;
     public static final boolean O = false;
-    private List<TicTacToeView> views;
+    private final List<TicTacToeView> views;
 
     public enum Status {X_WON, O_WON, TIE, UNDECIDED};
 
-    private char[][] grid;
+    private final char[][] grid;
     private boolean turn;
     private Status status;
 
@@ -23,9 +24,14 @@ public class TicTacToeModel {
                 grid[i][j] = ' ';
             }
         }
-        turn = X;
+        Random rand = new Random();
+        if(rand.nextInt(2)==1){
+            turn =X;
+        }else{
+            turn =O;
+        }
         status = Status.UNDECIDED;
-        views=new ArrayList<>();
+        this.views=new ArrayList<>();
 
     }
     public void addTicTacToeView(TicTacToeView v){
@@ -89,13 +95,11 @@ public class TicTacToeModel {
     public boolean getTurn() {return turn;}
 
     public void play(int x, int y) {
-        if (grid[x][y] != ' ') return;
+        if (!Character.isWhitespace(grid[x][y])) return;
         grid[x][y] = turn? 'X' : 'O'; //
         updateStatus( x, y);
 
-        for(TicTacToeView v : views){
-            v.update(new TicTacToeEvent(this , x, y,grid,turn,getStatus()));
-        }
+        views.forEach(v->v.update(new TicTacToeEvent(this , x, y,grid,turn,getStatus())));
         changeTurn();
     }
 }
