@@ -2,26 +2,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+
 
 public class TicTacToeFrame extends JFrame implements TicTacToeView {
     private final JButton[][] buttons;
-    private final JOptionPane p;
     private final Map<TicTacToeModel.Status, Runnable> update=new HashMap<>();
-
 
 
     public TicTacToeFrame(){
         super("tic tac toe");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new GridLayout(TicTacToeModel.SIZE, TicTacToeModel.SIZE));
-        p=new JOptionPane();
+        int aiOrHuman=JOptionPane.showConfirmDialog(this, "Do you want to play with AI?");
+        TicTacToeModel model = new TicTacToeModel();
 
-        TicTacToeModel model=new TicTacToeModel();
+
 
         buttons=new JButton[TicTacToeModel.SIZE][TicTacToeModel.SIZE];
-        TicTacToeController ttc =new TicTacToeController(model);
-        model.addTicTacToeView(this);//
+        TicTacToeController ttc =new TicTacToeController(model,aiOrHuman);
+        model.addTicTacToeView(this);
 
         for(int i = 0; i< TicTacToeModel.SIZE; i++){
             for(int j = 0; j< TicTacToeModel.SIZE; j++){

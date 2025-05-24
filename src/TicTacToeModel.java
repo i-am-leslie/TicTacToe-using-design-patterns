@@ -24,15 +24,8 @@ public class TicTacToeModel {
                 grid[i][j] = ' ';
             }
         }
-        Random rand = new Random();
-        if(rand.nextInt(2)==1){
-            turn =X;
-        }else{
-            turn =O;
-        }
         status = Status.UNDECIDED;
         this.views=new ArrayList<>();
-
     }
     public void addTicTacToeView(TicTacToeView v){
         views.add(v);
@@ -45,6 +38,8 @@ public class TicTacToeModel {
     }
 
     public Status getStatus() {return status;}
+
+    public  char[][] getGrid() {return grid;}
 
     private void updateStatus(int x, int y) {
 
@@ -97,9 +92,9 @@ public class TicTacToeModel {
     public void play(int x, int y) {
         if (!Character.isWhitespace(grid[x][y])) return;
         grid[x][y] = turn? 'X' : 'O'; //
-        updateStatus( x, y);
+        updateStatus( x, y); // update the model
 
-        views.forEach(v->v.update(new TicTacToeEvent(this , x, y,grid,turn,getStatus())));
+        views.forEach(v->v.update(new TicTacToeEvent(this , x, y,grid,turn,getStatus()))); // update the jframe
         changeTurn();
     }
 }
