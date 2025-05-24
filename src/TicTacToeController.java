@@ -26,7 +26,7 @@ public class TicTacToeController implements ActionListener {
         int y =Integer.parseInt(input[1]);
         model.play(x,y);
 
-        if(ai != null) {
+        if(ai != null && model.getTurn()==TicTacToeModel.O ) {
             ai.play();
         }
     }

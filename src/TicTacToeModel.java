@@ -24,6 +24,7 @@ public class TicTacToeModel {
                 grid[i][j] = ' ';
             }
         }
+        turn = X;
         status = Status.UNDECIDED;
         this.views=new ArrayList<>();
     }
