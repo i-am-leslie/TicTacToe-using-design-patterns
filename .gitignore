@@ -27,3 +27,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+.TicTacToe-using-design-patterns.iml
